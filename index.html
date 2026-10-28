@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!--
+    GASのWebアプリをiframeで包むだけのページ。
+    直接 /exec を開くと上部に出る「Google Apps Script のユーザーによって作成…」帯を出さず、全画面で使うためのもの。
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>ストック管理</title>
+  <meta name="theme-color" content="#FFFFFF">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="ストック">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="icon" type="image/png" href="icon-192.png">
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      background: #FFFFFF;
+    }
+    /* ノッチやホームバーの部分はよけて、残り全部をアプリにする */
+    iframe {
+      position: fixed;
+      top: env(safe-area-inset-top, 0px);
+      bottom: env(safe-area-inset-bottom, 0px);
+      left: env(safe-area-inset-left, 0px);
+      right: env(safe-area-inset-right, 0px);
+      width: calc(100% - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
+      height: calc(100% - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <iframe id="app" title="ストック管理" allow="clipboard-write"></iframe>
+  <script>
+    const APP_URL = 'https://script.google.com/macros/s/AKfycbzZPs0nPq_e7k3-59KrZdSgoU1rnhsScZ0HbfC3rp9fzXLQfYwicU2VZMeISFmgCdI1/exec';
+    // このページに付いたURLパラメータはそのままアプリへ渡す
+    document.getElementById('app').src = APP_URL + location.search;
+  </script>
+</body>
+</html>
